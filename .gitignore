@@ -1,0 +1,21 @@
+# Secrets & credentials
+.env
+credentials.json
+token.json
+
+# Temporary / regenerable files
+.tmp/
+!.tmp/.gitkeep
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
