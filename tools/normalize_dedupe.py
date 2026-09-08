@@ -52,11 +52,17 @@ def norm_title(title: str) -> str:
 
 def load_items(date: str) -> list[dict]:
     rss_path = tmp_path(f"rss_{date}.json")
-    if not rss_path.exists():
-        sys.exit(f"Not found: {rss_path} -- run tools/fetch_rss.py first.")
-    items = json.loads(rss_path.read_text(encoding="utf-8")).get("items", [])
-
     hits_path = tmp_path(f"search_hits_{date}.json")
+    if not rss_path.exists() and not hits_path.exists():
+        sys.exit(
+            f"No input: need {rss_path.name} (run tools/fetch_rss.py) or "
+            f"{hits_path.name} (agent-written WebSearch hits). In the cloud routine, "
+            f"RSS is blocked - write search_hits_<date>.json from WebSearch results."
+        )
+    items = []
+    if rss_path.exists():
+        items = json.loads(rss_path.read_text(encoding="utf-8")).get("items", [])
+
     if hits_path.exists():
         blob = json.loads(hits_path.read_text(encoding="utf-8"))
         hits = blob.get("items", blob) if isinstance(blob, dict) else blob

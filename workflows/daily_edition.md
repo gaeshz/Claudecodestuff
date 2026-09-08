@@ -24,36 +24,56 @@ the platform Artifact (see `## Artifact` below for the URL).
 - The daily run only calls `Artifact` `read_db` / `write_db`. It does **not** republish the
   HTML - the page reads everything live from the database.
 
+## Where this runs
+
+- **Locally (manual):** all tools work. Follow every step.
+- **In the scheduled cloud routine (CCR):** the egress proxy **blocks RSS** - all feed
+  hosts and Google News return `403`, so `fetch_rss.py` produces nothing. `WebSearch` and
+  `WebFetch` work normally (they route through the Anthropic API). Also **do not pass
+  `out_dir` to `Artifact read_db`** - the file-save triggers a permission prompt the routine
+  cannot answer. Read continuity data inline instead. The cloud path is: skip step 1, do a
+  thorough step 2, read the DB inline in step 3, then continue normally.
+
 ## Steps
 
-### 1. Fetch discovery feeds
+### 1. Fetch discovery feeds  *(local only - skip in the cloud routine)*
 ```
 python tools/fetch_rss.py --date <YYYY-MM-DD> --window 2d
 ```
 Writes `.tmp/rss_<date>.json` and `.tmp/feed_health_<date>.json`. Note any feeds that
-failed for the lessons-learned log, but do not stop.
+failed for the lessons-learned log, but do not stop. If this returns almost nothing
+(cloud), that is expected - rely entirely on step 2.
 
 ### 2. Targeted web search per section
 For each section in `config/sections.yaml`, run the `web_search` queries from
-`config/queries.yaml` (2-4 per section is enough; prioritize thin sections). Also run 2-3
-free-form searches for anything breaking you already suspect matters today. Collect results
-as a JSON list of `{title, url, source, published, summary}` and write them to
+`config/queries.yaml`. **In the cloud this is the only discovery mechanism**, so be
+thorough: run all of a section's `web_search` queries plus its `google_news` queries
+reworded as WebSearch queries (e.g. `semiconductor foundry capacity investment news
+this week`), plus 3-5 free-form searches for what is clearly breaking today
+(`biggest technology news today`, `major AI announcement this week`, etc.). Aim for
+80-150 distinct candidate items.
+
+Collect results as `{title, url, source, published, summary}` and write them to
 `.tmp/search_hits_<date>.json` (shape: a bare list, or `{"items": [...]}`).
 
 Aim for genuine breadth: primary announcements, analyst/consulting research, and
 serious independent analysis - not just wire copy.
 
 ### 3. Load continuity context from the Artifact
-- `Artifact` `read_db` `meta/latest` -> last edition date.
-- `read_db` `list` on `threads` -> open storylines with their timelines and summaries.
-  Keep these in context; you will match today's stories against them in step 8.
-- `read_db` `list` on `editions` (order by `date` desc, ~7 most recent) **with
-  `out_dir=.tmp/recent`** so each edition doc is written to a file. Also dump the last
-  ~2 editions' `editions/<date>/stories` collections there.
-- Then rebuild the dedup ledger from those files:
-  ```
-  python tools/build_ledger.py --dir .tmp/recent
-  ```
+- `Artifact` `read_db` `get` `meta/latest` -> last edition date.
+- `read_db` `list` on `threads` (`query.limit` 200) -> open storylines with their
+  timelines and summaries. Keep these in context; you match today's stories against them
+  in step 8.
+- `read_db` `list` on `editions` (`query.limit` 7) -> recent edition docs. `list` does
+  **not** accept `order_by`; it returns docs by id (which is the date), so the last
+  entries are the most recent. Read their `sections[].items[].headline` and `.sources`
+  inline to see what was already covered.
+- Build the dedup ledger:
+  - **Local:** `read_db` those editions with `out_dir=.tmp/recent`, then
+    `python tools/build_ledger.py --dir .tmp/recent`.
+  - **Cloud (no `out_dir`):** for each recent edition doc, save its JSON yourself with the
+    `Write` tool to `.tmp/recent/<date>.json`, then run `build_ledger.py` the same way.
+    Or skip the ledger and dedupe against the recent headlines by judgment in step 5.
 
 ### 4. Normalize & de-duplicate
 ```
@@ -191,6 +211,15 @@ existing trend, or (b) a client is more likely to raise this month.
 
 ## Edge cases & lessons learned
 
+- **The scheduled cloud routine (CCR) cannot fetch RSS.** Verified on the 2026-09-08 test
+  run: the egress proxy `403`s every feed host and Google News; only pypi/npm/GitHub/the
+  Anthropic API are allowlisted. `fetch_rss.py` returns ~nothing there. `WebSearch` /
+  `WebFetch` work. So in the cloud, discovery is WebSearch-only - see "Where this runs".
+- **`Artifact read_db` with `out_dir` prompts for permission** and stalls the routine
+  (it has no way to answer). Never use `out_dir` in the cloud path; read inline or
+  `Write` the JSON yourself. Plain `read_db` / `write_db` (incl. `batch`) do **not** prompt.
+- **`read_db` `list` rejects `order_by`** - that is `query`-only. `list` returns docs by
+  id; since edition ids are dates, the tail of the list is the most recent.
 - **Google News RSS is the discovery backbone.** Static feeds in `config/sources.yaml` are
   a supplement; several are low-yield or dead. `AnandTech` was removed (shut down 2025).
   Feeds that failed on the 2026-09-07 build: `AI News` (SSL failure), `Fierce Wireless`,
