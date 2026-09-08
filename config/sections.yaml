@@ -1,0 +1,157 @@
+# Sections of the daily edition, in display order.
+# The agent uses `scope` and `guiding_questions` to decide what belongs where
+# and what angle to take. `slug` is the stable key used in the edition JSON and
+# the Artifact database. Edit freely as your focus shifts.
+
+sections:
+  - slug: top_stories
+    title: Top Stories
+    scope: >
+      The 3-6 most important developments across all of CMT and high-tech today,
+      regardless of section. Cross-industry significance, not just big names.
+    guiding_questions:
+      - Why is this the most important thing that happened today?
+      - Who is forced to react to this?
+      - Is this a turning point or a continuation?
+    deep_dive_target: 3
+
+  - slug: need_to_know
+    title: What I Need to Know Today
+    scope: >
+      A tight briefing: 4-6 bullets a consultant should be able to speak to today.
+      Terse, high-signal, no fluff. This is a summary layer, not deep analysis.
+    guiding_questions:
+      - If a client mentioned this in a meeting, could I respond intelligently?
+      - What is the one sentence that captures it?
+    deep_dive_target: 0
+
+  - slug: high_tech
+    title: High-Tech Industry
+    scope: >
+      Hardware, devices, enterprise tech, platforms, software business models,
+      cloud, developer tooling, cybersecurity as a market. The broad technology
+      industry outside of pure semiconductors and pure telecom/media.
+    guiding_questions:
+      - What is changing about how technology companies make money?
+      - Where is value shifting in the stack?
+      - What does this mean for enterprise buyers and their transformation agendas?
+    deep_dive_target: 2
+
+  - slug: comms_media
+    title: Communications & Media
+    scope: >
+      Telecom operators, network infrastructure, spectrum, broadband, 5G/6G,
+      satellite/NTN, streaming, content, advertising, gaming, publishing,
+      creator economy, media M&A and bundling.
+    guiding_questions:
+      - How is the economics of connectivity or content changing?
+      - Who captures the value as distribution and demand shift?
+      - What is the regulatory or competitive pressure point?
+    deep_dive_target: 2
+
+  - slug: semiconductors
+    title: Semiconductors
+    scope: >
+      Chip design, foundries, fabs, equipment, materials, memory, advanced
+      packaging, EDA, capacity investment, export controls, node economics,
+      accelerators and custom silicon.
+    guiding_questions:
+      - How does this shift the balance between design, manufacturing, and equipment?
+      - What does it mean for capacity, pricing, and lead times downstream?
+      - How do geopolitics and industrial policy factor in?
+    deep_dive_target: 2
+
+  - slug: ai_emerging
+    title: AI & Emerging Technology
+    scope: >
+      Frontier models, AI infrastructure, inference economics, agents, applied AI
+      in enterprises, robotics, quantum, and other genuinely emerging technology.
+      Prioritize substance over hype.
+    guiding_questions:
+      - Does this change what is technically or economically possible?
+      - Which business models does it strengthen or threaten?
+      - What is the adoption bottleneck - cost, trust, talent, data, or regulation?
+    deep_dive_target: 2
+
+  - slug: manufacturing_ops
+    title: Manufacturing & Operations
+    scope: >
+      Electronics and hardware manufacturing, contract manufacturing, factory
+      automation, industrial operations, yield and quality, labor, reshoring,
+      capex cycles, operational efficiency programs.
+    guiding_questions:
+      - What is changing about where and how things get built?
+      - What is the cost, throughput, or resilience implication?
+      - Is this a structural shift or a cyclical swing?
+    deep_dive_target: 1
+
+  - slug: supply_chain
+    title: Supply Chain
+    scope: >
+      Component availability, logistics, trade policy and tariffs, critical
+      materials, inventory dynamics, supplier concentration, dual-sourcing,
+      nearshoring, supply-demand imbalances.
+    guiding_questions:
+      - Where is the fragility, and who is exposed?
+      - What is the mitigation and what does it cost?
+      - How long does this disruption or surplus last?
+    deep_dive_target: 1
+
+  - slug: datacenter_infra
+    title: Data Center & Infrastructure
+    scope: >
+      Data center construction, power and cooling, grid constraints, hyperscaler
+      and neocloud capex, networking hardware, subsea cables, energy sourcing,
+      real estate, and the physical build-out behind AI and cloud.
+    guiding_questions:
+      - What is the binding constraint right now - power, land, chips, capital, or skills?
+      - Who wins and who is squeezed as the build-out accelerates?
+      - What are the second-order effects (energy prices, local politics, water)?
+    deep_dive_target: 2
+
+  - slug: companies_moves
+    title: Major Companies & Competitive Moves
+    scope: >
+      M&A, partnerships, restructurings, leadership changes, strategy pivots,
+      earnings that reveal something structural, activist campaigns, major
+      product launches that reset a competitive field.
+    guiding_questions:
+      - What does this move tell us about the company's read of the future?
+      - How are competitors likely to respond?
+      - Is this offense or defense?
+    deep_dive_target: 2
+
+  - slug: challenges_opportunities
+    title: Industry Challenges & Opportunities
+    scope: >
+      Structural problems and openings: talent, regulation, margin pressure,
+      commoditization, new addressable markets, business-model disruption,
+      sustainability, trust and safety, aging infrastructure.
+    guiding_questions:
+      - Is this a problem to manage or an opportunity to capture?
+      - Which players are structurally advantaged to address it?
+      - What would a credible response look like?
+    deep_dive_target: 1
+
+  - slug: research_thought_leadership
+    title: Research & Thought Leadership
+    scope: >
+      Consulting firm reports, analyst research, academic work, executive essays,
+      and serious independent analysis. Ideas and frameworks, not news events.
+    guiding_questions:
+      - What is the argument, and is it convincing?
+      - How does it change or sharpen my mental model?
+      - Where would I push back?
+    deep_dive_target: 1
+
+  - slug: consultant_lens
+    title: What Consultants Should Be Thinking About
+    scope: >
+      Synthesis written directly for a management consultant: the patterns worth
+      tracking, the questions to bring to clients, the POV worth developing,
+      where conventional wisdom is lagging reality.
+    guiding_questions:
+      - What pattern is forming across this week's stories?
+      - What should I proactively raise with a client?
+      - Where do I disagree with the consensus, and why?
+    deep_dive_target: 1

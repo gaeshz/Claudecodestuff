@@ -1,0 +1,103 @@
+# Curated RSS/Atom feeds. `fetch_rss.py` pulls every feed here, tags each item
+# with `section_hint`, and skips (with a logged warning) any feed that is dead,
+# moved, or returns junk. Prune dead feeds and add good ones over time - the
+# daily workflow's "lessons learned" section tracks feed health.
+#
+# section_hint is a soft signal only; the agent decides final placement.
+# Google News query-based discovery lives in queries.yaml, not here.
+
+feeds:
+  # ---- Broad technology industry ----
+  - url: https://www.theverge.com/rss/index.xml
+    source: The Verge
+    section_hint: high_tech
+  - url: https://feeds.arstechnica.com/arstechnica/index
+    source: Ars Technica
+    section_hint: high_tech
+  - url: https://www.theregister.com/headlines.atom
+    source: The Register
+    section_hint: high_tech
+  - url: https://techcrunch.com/feed/
+    source: TechCrunch
+    section_hint: high_tech
+  - url: https://www.wired.com/feed/category/business/latest/rss
+    source: Wired Business
+    section_hint: high_tech
+  - url: https://www.technologyreview.com/feed/
+    source: MIT Technology Review
+    section_hint: ai_emerging
+
+  # ---- AI & emerging tech ----
+  - url: https://www.artificialintelligence-news.com/feed/
+    source: AI News
+    section_hint: ai_emerging
+  - url: https://spectrum.ieee.org/feeds/topic/artificial-intelligence.rss
+    source: IEEE Spectrum AI
+    section_hint: ai_emerging
+  - url: https://spectrum.ieee.org/feeds/feed.rss
+    source: IEEE Spectrum
+    section_hint: high_tech
+
+  # ---- Semiconductors ----
+  - url: https://www.semianalysis.com/feed
+    source: SemiAnalysis
+    section_hint: semiconductors
+  - url: https://www.eetimes.com/feed/
+    source: EE Times
+    section_hint: semiconductors
+  - url: https://semiengineering.com/feed/
+    source: Semiconductor Engineering
+    section_hint: semiconductors
+
+  # ---- Communications & media ----
+  - url: https://www.lightreading.com/rss.xml
+    source: Light Reading
+    section_hint: comms_media
+  - url: https://www.fiercewireless.com/rss/xml
+    source: Fierce Wireless
+    section_hint: comms_media
+  - url: https://www.telecoms.com/feed/
+    source: Telecoms.com
+    section_hint: comms_media
+  - url: https://www.hollywoodreporter.com/c/business/feed/
+    source: THR Business
+    section_hint: comms_media
+  - url: https://variety.com/v/digital/feed/
+    source: Variety Digital
+    section_hint: comms_media
+
+  # ---- Data center & infrastructure ----
+  - url: https://www.datacenterdynamics.com/en/rss/
+    source: Data Center Dynamics
+    section_hint: datacenter_infra
+  - url: https://www.datacenterknowledge.com/rss.xml
+    source: Data Center Knowledge
+    section_hint: datacenter_infra
+
+  # ---- Supply chain / manufacturing / operations ----
+  - url: https://www.supplychaindive.com/feeds/news/
+    source: Supply Chain Dive
+    section_hint: supply_chain
+  - url: https://www.manufacturingdive.com/feeds/news/
+    source: Manufacturing Dive
+    section_hint: manufacturing_ops
+  - url: https://www.industryweek.com/rss.xml
+    source: IndustryWeek
+    section_hint: manufacturing_ops
+
+  # ---- Research & thought leadership ----
+  - url: https://www.mckinsey.com/insights/rss
+    source: McKinsey Insights
+    section_hint: research_thought_leadership
+  - url: https://knowledge.wharton.upenn.edu/feed/
+    source: Knowledge at Wharton
+    section_hint: research_thought_leadership
+  - url: https://sloanreview.mit.edu/feed/
+    source: MIT Sloan Management Review
+    section_hint: research_thought_leadership
+  - url: https://stratechery.com/feed/
+    source: Stratechery
+    section_hint: research_thought_leadership
+  - url: https://www.ben-evans.com/benedictevans?format=rss
+    source: Benedict Evans
+    section_hint: research_thought_leadership

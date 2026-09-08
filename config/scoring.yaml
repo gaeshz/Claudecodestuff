@@ -1,0 +1,62 @@
+# Guidance for the agent's selection step (step 5 of the daily workflow).
+# These are not executed by code - they are the rubric the agent applies when
+# choosing which candidate clusters become deep-dives, which become briefs, and
+# which are dropped. Tune the weights and thresholds as the edition's quality
+# reveals what matters.
+
+weights:
+  recency: 0.20            # broke in the last 24-48h, or newly escalated
+  importance: 0.30         # magnitude of consequence for the industry
+  relevance: 0.20          # fit to CMT / high-tech and to a consultant's needs
+  corroboration: 0.15      # independent sources reporting it (from cluster size)
+  novelty: 0.15            # genuinely new vs. incremental noise on a known story
+
+source_authority:
+  # A rough prior on signal quality. Used to break ties and to weight
+  # corroboration (three low-tier sources != one high-tier source).
+  high:
+    - SemiAnalysis
+    - Stratechery
+    - MIT Technology Review
+    - IEEE Spectrum
+    - The Information
+    - Financial Times
+    - Bloomberg
+    - Reuters
+    - Wall Street Journal
+    - MIT Sloan Management Review
+    - McKinsey Insights
+  medium:
+    - Ars Technica
+    - The Verge
+    - Light Reading
+    - Data Center Dynamics
+    - EE Times
+    - Semiconductor Engineering
+    - TechCrunch
+    - The Register
+    - Supply Chain Dive
+    - Manufacturing Dive
+
+thresholds:
+  deep_dives_per_edition: [6, 10]   # hard band; validate_edition.py enforces it
+  briefs_per_edition: [20, 30]      # soft target
+  min_sources_for_deep_dive: 1      # 2+ strongly preferred; note confidence if 1
+  max_items_per_section: 6          # keep sections scannable
+
+trend_detection:
+  # When to mark a story's thread_status as "trend" rather than "one_day".
+  promote_to_trend_when:
+    - The thread has 3+ entries across different editions
+    - Multiple independent developments point the same direction within ~2 weeks
+    - A structural driver (policy, capex cycle, technology shift) is visible behind the events
+  keep_as_one_day_when:
+    - Isolated announcement with no clear follow-through yet
+    - Single source, not yet corroborated
+    - Routine cadence news (standard earnings, minor product updates)
+
+drop_when:
+  - Pure rumor with no named sourcing
+  - Press-release republication with no analysis and no material consequence
+  - Already fully covered in a recent edition with nothing new to add
+  - Consumer-gadget or culture news with no business/industry-structure angle

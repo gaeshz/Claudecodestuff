@@ -71,3 +71,17 @@ credentials.json, token.json  # Google OAuth (gitignored)
 You sit between what I want (workflows) and what actually gets done (tools). Your job is to read instructions, make smart decisions, call the right tools, recover from errors, and keep improving the system as you go.
 
 Stay pragmatic. Stay reliable. Keep learning.
+
+---
+
+## The CMT Briefing (daily edition)
+
+The main deliverable in this repo is a daily industry-intelligence briefing for
+communications, media, technology and high-tech. To produce an edition, follow
+`workflows/daily_edition.md` end to end — it is self-contained. Tools live in
+`tools/` (`fetch_rss`, `normalize_dedupe`, `validate_edition`, `mark_published`,
+`edition_stats`); knobs live in `config/*.yaml`; the edition is published into the
+Claude Artifact at the URL in `.artifact_url` via the `Artifact` tool's `write_db`.
+No API keys are needed. When you learn something (dead feed, better query, a
+storyline worth promoting to a trend), update the relevant `config/` file or the
+workflow's "Edge cases & lessons learned" section.

@@ -1,0 +1,123 @@
+# Query-based discovery. Two consumers:
+#
+#   google_news:  fetch_rss.py turns each string into
+#                 https://news.google.com/rss/search?q=<query>%20when:<window>
+#                 This is the resilient backbone - no API key, broad coverage.
+#
+#   web_search:   the agent runs these as WebSearch queries in the daily
+#                 workflow for recency-ranked results and to catch what RSS
+#                 misses (analyst notes, primary announcements, paywalled outlets).
+#
+# `window` is the Google News recency window (1d, 2d, 7d). Keep queries specific
+# enough to return signal, broad enough to catch the unexpected.
+
+default_window: 2d
+
+sections:
+  top_stories:
+    google_news:
+      - CMT industry technology media telecom
+      - technology industry major announcement
+    web_search:
+      - biggest technology industry news this week
+      - major telecom media technology developments today
+
+  high_tech:
+    google_news:
+      - enterprise technology strategy
+      - cloud computing market shift
+      - technology business model change
+    web_search:
+      - enterprise software market shifts this week
+      - big tech strategy change
+
+  comms_media:
+    google_news:
+      - telecom operator capex strategy
+      - 5G 6G network investment
+      - streaming media bundling deal
+      - spectrum broadband policy
+      - satellite direct to cell
+    web_search:
+      - telecom industry strategy news this week
+      - media streaming industry consolidation
+
+  semiconductors:
+    google_news:
+      - semiconductor foundry capacity investment
+      - chip export controls
+      - advanced packaging HBM memory
+      - TSMC Intel Samsung fab
+      - AI accelerator custom silicon
+    web_search:
+      - semiconductor industry news this week
+      - chip supply and pricing outlook
+
+  ai_emerging:
+    google_news:
+      - frontier AI model release
+      - AI inference cost economics
+      - enterprise AI adoption
+      - AI agents enterprise deployment
+      - quantum computing milestone
+    web_search:
+      - AI industry developments this week
+      - enterprise AI ROI and adoption news
+
+  manufacturing_ops:
+    google_news:
+      - electronics manufacturing reshoring
+      - factory automation investment
+      - contract manufacturer earnings
+    web_search:
+      - electronics manufacturing industry news this week
+
+  supply_chain:
+    google_news:
+      - technology supply chain disruption
+      - semiconductor supply chain tariffs
+      - rare earth critical minerals technology
+    web_search:
+      - tech supply chain and tariffs news this week
+
+  datacenter_infra:
+    google_news:
+      - data center power constraints grid
+      - hyperscaler data center capex
+      - data center cooling energy deal
+      - subsea cable investment
+      - nuclear power data center
+    web_search:
+      - data center buildout and power news this week
+      - hyperscaler infrastructure spending
+
+  companies_moves:
+    google_news:
+      - technology company acquisition merger
+      - tech company restructuring layoffs strategy
+      - telecom media merger
+    web_search:
+      - major tech M&A and partnerships this week
+
+  challenges_opportunities:
+    google_news:
+      - technology industry regulation antitrust
+      - tech talent shortage
+      - technology margin pressure commoditization
+    web_search:
+      - structural challenges facing tech and telecom industry
+
+  research_thought_leadership:
+    google_news:
+      - McKinsey BCG Bain technology report
+      - Gartner Forrester technology forecast
+      - technology industry outlook analysis
+    web_search:
+      - new consulting report technology media telecom
+      - notable tech industry essay analysis this week
+
+  consultant_lens:
+    google_news:
+      - technology industry trends consultants
+    web_search:
+      - what should executives be thinking about in tech this week
