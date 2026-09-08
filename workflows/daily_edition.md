@@ -220,6 +220,13 @@ existing trend, or (b) a client is more likely to raise this month.
   `Write` the JSON yourself. Plain `read_db` / `write_db` (incl. `batch`) do **not** prompt.
 - **`read_db` `list` rejects `order_by`** - that is `query`-only. `list` returns docs by
   id; since edition ids are dates, the tail of the list is the most recent.
+- **Do NOT delegate to sub-agents (the `Agent`/`Task` tool) in the cloud routine.** The
+  2026-09-08 v2 run spawned a background discovery agent and ended its turn; CCR does not
+  resume the parent when a sub-agent finishes, so the run stalled at `idle` before
+  building the edition. Run every step yourself, in sequence, in one continuous pass.
+- **`WebSearch` with "news this week" appended is weak** - it returns roundup/homepage
+  links. Prefer specific queries (`Trump semiconductor tariffs`, `hyperscaler capex 2027`,
+  `Anthropic IPO valuation`) and follow the strongest 1-2 links per topic with `WebFetch`.
 - **Google News RSS is the discovery backbone.** Static feeds in `config/sources.yaml` are
   a supplement; several are low-yield or dead. `AnandTech` was removed (shut down 2025).
   Feeds that failed on the 2026-09-07 build: `AI News` (SSL failure), `Fierce Wireless`,
