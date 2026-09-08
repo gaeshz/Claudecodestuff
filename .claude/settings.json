@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Artifact",
+      "WebSearch",
+      "WebFetch",
+      "Read",
+      "Write",
+      "Edit",
+      "Glob",
+      "Grep",
+      "TodoWrite",
+      "Bash(python:*)",
+      "Bash(python3:*)",
+      "Bash(pip:*)",
+      "Bash(python -m pip:*)",
+      "Bash(git:*)",
+      "Bash(gh:*)",
+      "Bash(mkdir:*)",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(date:*)",
+      "Bash(echo:*)"
+    ],
+    "deny": []
+  }
+}

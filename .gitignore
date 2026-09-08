@@ -19,3 +19,6 @@ venv/
 Thumbs.db
 .vscode/
 .idea/
+
+# Claude Code — keep shared settings.json, ignore personal local overrides
+.claude/settings.local.json

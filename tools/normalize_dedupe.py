@@ -81,16 +81,20 @@ def age_hours(published: str | None, now: datetime) -> float | None:
     if not published:
         return None
     try:
-        return round((now - datetime.fromisoformat(published)).total_seconds() / 3600, 1)
+        dt = datetime.fromisoformat(str(published).replace("Z", "+00:00"))
     except ValueError:
         return None
+    if dt.tzinfo is None:  # date-only or naive timestamps (common from WebSearch)
+        dt = dt.replace(tzinfo=timezone.utc)
+    return round((now - dt).total_seconds() / 3600, 1)
 
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--date", default=datetime.now().strftime("%Y-%m-%d"))
-    ap.add_argument("--max-age-days", type=int, default=4,
-                    help="Drop dated items older than this. Undated items are kept.")
+    ap.add_argument("--max-age-days", type=int, default=6,
+                    help="Drop dated items older than this. Undated items are kept. "
+                         "WebSearch dates are unreliable, so keep this loose in the cloud path.")
     ap.add_argument("--similarity", type=int, default=82,
                     help="rapidfuzz token_set_ratio threshold for merging titles (0-100).")
     ap.add_argument("--limit", type=int, default=70,
